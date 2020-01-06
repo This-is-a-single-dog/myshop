@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	    <title>
+			{% block title %}个人中心{% endblock %}
+		</title>
+	</head>
+	<body>
+		{% block context %}
+		<img src="{{ MEDIA_URL }}{{ seller.photo }}" alt="photo" width=50 height=50>
+		<p>姓    名：{{ seller.name }}</p>
+		<p>性    别：{{ seller.sex }}</p>
+		<p>年    龄：{{ seller.age }}</p>
+		<p>电话号码：{{ seller.phone }}</p>
+		<p>邮    箱：{{ seller.email }}</p>
+		<p>地    址：{{ seller.address }}</p>
+		<p>注册日期：{{ seller.registerDate }}</p>
+		<a href="{% url 'seller:seller_addGoods' seller.pk %}">添加商品</a>
+		<a href="{% url 'seller:seller_addTag' seller.pk %}">添加商品标签</a>
+		<a href="{% url 'seller:seller_addTypes' seller.pk %}">添加商品类别</a>
+		<a href="{% url 'seller:seller_addPreferential' seller.pk %}">添加商品优惠券</a>
+		<a href="{% url 'seller:seller_allGoods' seller.pk %}">我的所有上架商品</a>
+		{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	    <title>
+			{% block title %}我的所有上架商品 | 列表{% endblock %}
+		</title>
+	</head>
+	<body>
+		{% block context %}
+			<h2>我的所有上架商品 | 列表</h2>
+			<hr>
+			{% for goods in goodses %}
+				<a href="{% url 'seller:seller_goodsDetail' goods.pk %}"><h3>{{ goods.name }}</h3></a>
+				<p>价格：{{ goods.price }} 元</p>
+				<p>数量：{{ goods.number }} 个</p>
+				<p>颜色：{{ goods.color }}</p>
+				<p>上架时间：{{ goods.time }}</p>
+				<p>是否有优惠：{{ goods.isPreferential }}</p>
+				<hr>
+			{% endfor %}
+		{% endblock %}
+	</body>
+</html>

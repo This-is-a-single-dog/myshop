@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+	    <title>
+			{% block title %}我的所有上架商品 | 详细{% endblock %}
+		</title>
+	</head>
+	<body>
+		{% block context %}
+		{% if goods.goodsImage %}
+			<img src="{{ MEDIA_URL }}{{ goods.goodsImage }}" alt="photo" width=50 height=50>
+		{% else %}
+			<p>此商品还没有上传图片！！</p>
+		{% endif %}
+		<h3>{{ goods.name }}</h3>
+		<p>价格：{{ goods.price }} 元</p>
+		<p>数量：{{ goods.number }} 个</p>
+		<p>颜色：{{ goods.color }}</p>
+		<p>上架时间：{{ goods.time }}</p>
+		<p>商品描述：{{ goods.describe }}</p>
+		{% if goods.isPreferential == '否' %}
+			<p>此商品的优惠：没有</p>
+		{% else %}
+			<p>此商品的优惠：</p>
+			<ul>
+				{% for preferential in preferentials %}
+					{% if preferential.preferential_type is 1 %}
+						<li>
+							此商品满 {{ preferential.enoughNumber }} 元减 {{ preferential.minusNumber }} 元<br>
+							截至日期： {{ preferential.cutOffDatetime }}<br>
+							店家的描述：{{ preferential.describe }}
+						</li>
+					{% elif preferential.preferential_type is 2 %}
+						<li>
+							此商品打 {{ preferential.discount }} 折<br>
+							截至日期是 {{ preferential.cutOffDatetime }}<br>
+							店家的描述是 {{ preferential.describe }}
+						</li>
+					{% else %}
+						<li>
+							此商品满 {{ preferential.enoughNumber }} 元
+							打 {{ preferential.discount }} 折<br>
+							截至日期是 {{ preferential.cutOffDatetime }}<br>
+							店家的描述是 {{ preferential.describe }}
+						</li>
+					{% endif %}
+				{% endfor %}
+			</ul>
+		{% endif %}
+		<hr>
+		<a href="{% url 'seller:seller_goodsChangeMessage' goods.pk %}"><h3>修改商品相关信息</h3></a>
+		{% endblock %}
+	</body>
+</html>
